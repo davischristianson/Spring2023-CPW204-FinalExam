@@ -18,10 +18,10 @@ function changePlayers():void{
     if(currentPlayerName == player1Name) {
         currentPlayerName = player2Name;
     }
-    if(currentPlayerName == player2Name) {
+    else if(currentPlayerName == player2Name) {
         currentPlayerName = player1Name;
     }
-    if(currentPlayerName.trim() == "") {
+    else {
         currentPlayerName = player1Name;
     }
 
@@ -81,19 +81,34 @@ function createNewGame(){
 }
 
 function rollDie():void{
-    let currTotal = parseInt((<HTMLInputElement>document.getElementById("total")).value);
-    
-    //roll the die and get a random value 1 - 6 (use generateRandomValue function)
 
+    let currTotal = parseInt((<HTMLInputElement>document.getElementById("total")).value);
+    let dieRoll:number = 0;
+
+    //roll the die and get a random value 1 - 6 (use generateRandomValue function)
+    dieRoll = generateRandomValue(1, 6);
+    let dieValue = <HTMLInputElement>document.getElementById("die");
+    dieValue.value = dieRoll.toString();
+    
     //if the roll is 1
     //  change players
     //  set current total to 0
+    if(dieRoll == 1) {
+        currTotal = 0;
+        changePlayers();
+    }
     
     //if the roll is greater than 1
     //  add roll value to current total
+    if(dieRoll > 1) {
+        currTotal += dieRoll;
+    }
 
     //set the die roll to value player rolled
     //display current total on form
+    let total = <HTMLInputElement>document.getElementById("total");
+    total.value = currTotal.toString();
+
 }
 
 function holdDie():void{

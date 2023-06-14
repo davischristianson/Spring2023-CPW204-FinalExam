@@ -10,10 +10,10 @@ function changePlayers() {
     if (currentPlayerName == player1Name) {
         currentPlayerName = player2Name;
     }
-    if (currentPlayerName == player2Name) {
+    else if (currentPlayerName == player2Name) {
         currentPlayerName = player1Name;
     }
-    if (currentPlayerName.trim() == "") {
+    else {
         currentPlayerName = player1Name;
     }
     document.getElementById("current").innerText = currentPlayerName;
@@ -56,6 +56,19 @@ function createNewGame() {
 }
 function rollDie() {
     var currTotal = parseInt(document.getElementById("total").value);
+    var dieRoll = 0;
+    dieRoll = generateRandomValue(1, 6);
+    var dieValue = document.getElementById("die");
+    dieValue.value = dieRoll.toString();
+    if (dieRoll == 1) {
+        currTotal = 0;
+        changePlayers();
+    }
+    if (dieRoll > 1) {
+        currTotal += dieRoll;
+    }
+    var total = document.getElementById("total");
+    total.value = currTotal.toString();
 }
 function holdDie() {
     changePlayers();
