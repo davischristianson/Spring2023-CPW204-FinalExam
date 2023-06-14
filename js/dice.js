@@ -71,5 +71,25 @@ function rollDie() {
     total.value = currTotal.toString();
 }
 function holdDie() {
+    var currTotal = parseInt(document.getElementById("total").value);
+    var currScorePlayer1 = parseInt(document.getElementById("score1").value);
+    var currScorePlayer2 = parseInt(document.getElementById("score2").value);
+    var addScore = currTotal;
+    var currentPlayerName = document.getElementById("current").innerText;
+    var player1Name = document.getElementById("player1").value;
+    var player2Name = document.getElementById("player2").value;
+    if (currentPlayerName == player1Name) {
+        currScorePlayer1 += addScore;
+        document.getElementById("score1").value = currScorePlayer1.toString();
+    }
+    else if (currentPlayerName == player2Name) {
+        currScorePlayer2 += addScore;
+        document.getElementById("score2").value = currScorePlayer2.toString();
+    }
+    var total = document.getElementById("total");
+    currTotal = 0;
+    total.value = currTotal.toString();
+    var dieRoll = document.getElementById("die");
+    dieRoll.value = "";
     changePlayers();
 }

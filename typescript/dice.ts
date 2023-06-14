@@ -7,7 +7,6 @@ function generateRandomValue(minValue:number, maxValue:number):number{
     return random;
 }
 
-
 function changePlayers():void{
     let currentPlayerName = document.getElementById("current").innerText;
     let player1Name = (<HTMLInputElement>document.getElementById("player1")).value;
@@ -108,15 +107,39 @@ function rollDie():void{
     //display current total on form
     let total = <HTMLInputElement>document.getElementById("total");
     total.value = currTotal.toString();
-
 }
 
 function holdDie():void{
     //get the current turn total
+    let currTotal = parseInt((<HTMLInputElement>document.getElementById("total")).value);
+    let currScorePlayer1 = parseInt((<HTMLInputElement>document.getElementById("score1")).value);
+    let currScorePlayer2 = parseInt((<HTMLInputElement>document.getElementById("score2")).value);
+
+    let addScore = currTotal;
+
+
     //determine who the current player is
     //add the current turn total to the player's total score
+    let currentPlayerName = document.getElementById("current").innerText;
+    let player1Name = (<HTMLInputElement>document.getElementById("player1")).value;
+    let player2Name = (<HTMLInputElement>document.getElementById("player2")).value;
+
+    if(currentPlayerName == player1Name) {
+        currScorePlayer1 += addScore;
+        (<HTMLInputElement>document.getElementById("score1")).value = currScorePlayer1.toString();
+    }
+    else if(currentPlayerName == player2Name) {
+        currScorePlayer2 += addScore;
+        (<HTMLInputElement>document.getElementById("score2")).value = currScorePlayer2.toString();
+    }
 
     //reset the turn total to 0
+    let total = <HTMLInputElement>document.getElementById("total");
+    currTotal = 0;
+    total.value = currTotal.toString();
+
+    let dieRoll = <HTMLInputElement>document.getElementById("die");
+    dieRoll.value = "";
 
     //change players
     changePlayers();
