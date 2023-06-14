@@ -7,13 +7,16 @@ function changePlayers() {
     var currentPlayerName = document.getElementById("current").innerText;
     var player1Name = document.getElementById("player1").value;
     var player2Name = document.getElementById("player2").value;
-    currentPlayerName == player2Name;
     if (currentPlayerName == player1Name) {
         currentPlayerName = player2Name;
     }
     if (currentPlayerName == player2Name) {
         currentPlayerName = player1Name;
     }
+    if (currentPlayerName.trim() == "") {
+        currentPlayerName = player1Name;
+    }
+    document.getElementById("current").innerText = currentPlayerName;
 }
 window.onload = function () {
     var newGameBtn = document.getElementById("new_game");
