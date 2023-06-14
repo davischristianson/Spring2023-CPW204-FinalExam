@@ -36,7 +36,36 @@ window.onload = function(){
     document.getElementById("hold").onclick = holdDie;
 }
 
+function pigDiceChampion() {
+    // Player names
+    let player1Name = (<HTMLInputElement>document.getElementById("player1")).value;
+    let player2Name = (<HTMLInputElement>document.getElementById("player2")).value;
+    // Player scores
+    let player1Score = parseInt((<HTMLInputElement>document.getElementById("score1")).value);
+    let player2Score = parseInt((<HTMLInputElement>document.getElementById("score2")).value);
+
+    // div to put new elements in
+    let winnerDiv = document.getElementById("champion");
+    let championHeading = document.createElement("h2");
+    championHeading.id = "champ";
+    championHeading.className = "currChampion";
+
+    if(player1Score > player2Score) {
+        championHeading.innerText = `${player1Name} has won! Their score was ${player1Score}.` +
+                                ` Press new game to play another or continue to play forever!`;
+    }
+    else if(player2Score > player1Score) {
+        championHeading.innerText = `${player2Name} has won! Their score was ${player2Score}.` +
+                                ` Press new game to play another or continue to play forever!`;
+    }
+    winnerDiv.appendChild(championHeading);
+
+    document.getElementById("champion").style.visibility = "visible";
+}
+
 function createNewGame(){
+    document.getElementById("champion").style.visibility = "hidden";
+
     //set player 1 and player 2 scores to 0
     let score1 = <HTMLInputElement>document.getElementById("score1");
     score1.value = "0";
@@ -80,7 +109,6 @@ function createNewGame(){
 }
 
 function rollDie():void{
-
     let currTotal = parseInt((<HTMLInputElement>document.getElementById("total")).value);
     let dieRoll:number = 0;
 
@@ -112,8 +140,8 @@ function rollDie():void{
 function holdDie():void{
     //get the current turn total
     let currTotal = parseInt((<HTMLInputElement>document.getElementById("total")).value);
-    let currScorePlayer1 = parseInt((<HTMLInputElement>document.getElementById("score1")).value);
-    let currScorePlayer2 = parseInt((<HTMLInputElement>document.getElementById("score2")).value);
+    let player1Score = parseInt((<HTMLInputElement>document.getElementById("score1")).value);
+    let player2Score = parseInt((<HTMLInputElement>document.getElementById("score2")).value);
 
     let addScore = currTotal;
 
@@ -125,12 +153,18 @@ function holdDie():void{
     let player2Name = (<HTMLInputElement>document.getElementById("player2")).value;
 
     if(currentPlayerName == player1Name) {
-        currScorePlayer1 += addScore;
-        (<HTMLInputElement>document.getElementById("score1")).value = currScorePlayer1.toString();
+        player1Score += addScore;
+        (<HTMLInputElement>document.getElementById("score1")).value = player1Score.toString();
+        if(player1Score >= 100) {
+            pigDiceChampion();
+        }
     }
     else if(currentPlayerName == player2Name) {
-        currScorePlayer2 += addScore;
-        (<HTMLInputElement>document.getElementById("score2")).value = currScorePlayer2.toString();
+        player2Score += addScore;
+        (<HTMLInputElement>document.getElementById("score2")).value = player2Score.toString();
+        if(player1Score >= 100) {
+            pigDiceChampion();
+        }
     }
 
     //reset the turn total to 0

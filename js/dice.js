@@ -24,7 +24,28 @@ window.onload = function () {
     document.getElementById("roll").onclick = rollDie;
     document.getElementById("hold").onclick = holdDie;
 };
+function pigDiceChampion() {
+    var player1Name = document.getElementById("player1").value;
+    var player2Name = document.getElementById("player2").value;
+    var player1Score = parseInt(document.getElementById("score1").value);
+    var player2Score = parseInt(document.getElementById("score2").value);
+    var winnerDiv = document.getElementById("champion");
+    var championHeading = document.createElement("h2");
+    championHeading.id = "champ";
+    championHeading.className = "currChampion";
+    if (player1Score > player2Score) {
+        championHeading.innerText = "".concat(player1Name, " has won! Their score was ").concat(player1Score, ".") +
+            " Press new game to play another or continue to play forever!";
+    }
+    else if (player2Score > player1Score) {
+        championHeading.innerText = "".concat(player2Name, " has won! Their score was ").concat(player2Score, ".") +
+            " Press new game to play another or continue to play forever!";
+    }
+    winnerDiv.appendChild(championHeading);
+    document.getElementById("champion").style.visibility = "visible";
+}
 function createNewGame() {
+    document.getElementById("champion").style.visibility = "hidden";
     var score1 = document.getElementById("score1");
     score1.value = "0";
     var score2 = document.getElementById("score2");
@@ -72,19 +93,25 @@ function rollDie() {
 }
 function holdDie() {
     var currTotal = parseInt(document.getElementById("total").value);
-    var currScorePlayer1 = parseInt(document.getElementById("score1").value);
-    var currScorePlayer2 = parseInt(document.getElementById("score2").value);
+    var player1Score = parseInt(document.getElementById("score1").value);
+    var player2Score = parseInt(document.getElementById("score2").value);
     var addScore = currTotal;
     var currentPlayerName = document.getElementById("current").innerText;
     var player1Name = document.getElementById("player1").value;
     var player2Name = document.getElementById("player2").value;
     if (currentPlayerName == player1Name) {
-        currScorePlayer1 += addScore;
-        document.getElementById("score1").value = currScorePlayer1.toString();
+        player1Score += addScore;
+        document.getElementById("score1").value = player1Score.toString();
+        if (player1Score >= 100) {
+            pigDiceChampion();
+        }
     }
     else if (currentPlayerName == player2Name) {
-        currScorePlayer2 += addScore;
-        document.getElementById("score2").value = currScorePlayer2.toString();
+        player2Score += addScore;
+        document.getElementById("score2").value = player2Score.toString();
+        if (player1Score >= 100) {
+            pigDiceChampion();
+        }
     }
     var total = document.getElementById("total");
     currTotal = 0;
