@@ -54,3 +54,8 @@ fieldset {
 #name2Error {
     visibility: hidden;
 }
+
+#champion {
+    visibility: hidden;
+    color: crimson; 
+}
