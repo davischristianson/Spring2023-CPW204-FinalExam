@@ -1,7 +1,8 @@
 function generateRandomValue(minValue:number, maxValue:number):number{
-    var random = Math.random();
+    var random:number = 0;
     
     //TODO: use random to generate a number between min and max
+    random = Math.floor(Math.random() * maxValue) + minValue;
 
     return random;
 }
@@ -12,8 +13,15 @@ function changePlayers():void{
     let player1Name = (<HTMLInputElement>document.getElementById("player1")).value;
     let player2Name = (<HTMLInputElement>document.getElementById("player2")).value;
 
+    currentPlayerName == player2Name;
     //swap from player to player by comparing current name to player names
     //set currentPlayerName to the next player
+    if(currentPlayerName == player1Name) {
+        currentPlayerName = player2Name;
+    }
+    if(currentPlayerName == player2Name) {
+        currentPlayerName = player1Name;
+    }
 }
 
 window.onload = function(){
@@ -27,17 +35,45 @@ window.onload = function(){
 
 function createNewGame(){
     //set player 1 and player 2 scores to 0
+    let score1 = <HTMLInputElement>document.getElementById("score1");
+    score1.value = "0";
+    let score2 = <HTMLInputElement>document.getElementById("score2");
+    score2.value = "0";
 
     //verify each player has a name
     //if both players don't have a name display error
+    let player1Name = (<HTMLInputElement>document.getElementById("player1")).value;
+    let player2Name = (<HTMLInputElement>document.getElementById("player2")).value;
 
-    //if both players do have a name start the game!
-    document.getElementById("turn").classList.add("open");
-    (<HTMLInputElement>document.getElementById("total")).value = "0";
-    //lock in player names and then change players
-    document.getElementById("player1").setAttribute("disabled", "disabled");
-    document.getElementById("player2").setAttribute("disabled", "disabled");
-    changePlayers();
+    let canStartGame:boolean = true;
+
+    if(player1Name.trim() == "") {
+        document.getElementById("name1Error").style.visibility = "visible";
+        canStartGame = false;
+    }
+    if(player2Name.trim() == "") {
+        document.getElementById("name2Error").style.visibility = "visible";
+        canStartGame = false;
+    }
+
+    // To see if the user has entered one or both names in the player name textbox.
+    // If they have, hide error message
+    if(player1Name.trim() != "") {
+        document.getElementById("name1Error").style.visibility = "hidden";
+    }
+    if(player2Name.trim() != "") {
+        document.getElementById("name2Error").style.visibility = "hidden";
+    }
+
+    // If true, start the game
+    if(canStartGame) {
+        document.getElementById("turn").classList.add("open");
+        (<HTMLInputElement>document.getElementById("total")).value = "0";
+        //lock in player names and then change players
+        document.getElementById("player1").setAttribute("disabled", "disabled");
+        document.getElementById("player2").setAttribute("disabled", "disabled");
+        changePlayers();
+    }
 }
 
 function rollDie():void{
